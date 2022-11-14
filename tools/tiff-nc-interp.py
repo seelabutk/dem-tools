@@ -179,8 +179,6 @@ t_size = ds.dimensions['time'].size
 i = 0
 for k in tqdm(ds.variables.keys()):
     if k not in ['longitude', 'latitude', 'dem', 'bdy']:
-        if k != 'Air_Pressure_at_Surface':
-            continue
         new_ds_var = new_ds.createVariable(k, 'f4', ('time', 'latitude', 'longitude',))
         if 'units' in dir(ds[k]):
             new_ds_var.units = ds[k].units
@@ -198,9 +196,6 @@ for k in tqdm(ds.variables.keys()):
                                nc_lats,
                                nc_lngs)
             new_ds_var[t,:] = data
-        i +=1
-        if i > 2:
-            break
 # close the dataset
 print(f'Closing interpolated netCDF file [{args.out_nc}]...')
 new_ds.close()
