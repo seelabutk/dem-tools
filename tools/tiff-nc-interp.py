@@ -179,12 +179,15 @@ t_size = ds.dimensions['time'].size
 i = 0
 for k in tqdm(ds.variables.keys()):
     if k not in ['longitude', 'latitude', 'dem', 'bdy']:
+        if k != 'Air_Pressure_at_Surface':
+            continue
         new_ds_var = new_ds.createVariable(k, 'f4', ('time', 'latitude', 'longitude',))
         if 'units' in dir(ds[k]):
             new_ds_var.units = ds[k].units
 
         for t in tqdm(range(t_size), leave=False):
             data = ds[k][t,:].astype(np.float64)
+            data = min_max_scale(data)
             data = interpolate(data.T,
                                max_lat_idx,
                                min_lat_idx,
