@@ -172,7 +172,6 @@ new_ds_var_lon = new_ds.createVariable('longitude', 'f4', ('longitude',))
 new_ds_var_lat = new_ds.createVariable('latitude', 'f4', ('latitude',))
 new_ds_var_lon[:] = new_dem_lngs
 new_ds_var_lat[:] = new_dem_lats
-from sklearn.preprocessing import MinMaxScaler
 # begin interpolating data and writing it to the new netCDF file
 print(f'Interpolating data and writing to [{args.out_nc}]...')
 t_size = ds.dimensions['time'].size
